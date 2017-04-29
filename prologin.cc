@@ -21,6 +21,16 @@ void jouer_tour()
     }
 
     donner_echantillon(turnActions.echantillonAdv);
+
+    if(tour_actuel() >= NB_TOURS-1)
+    {
+        BoardSimulator endBoard(moi());
+        for(std::vector<position> reg : endBoard.getRegions())
+        {
+            if(reg.size() < 2) continue;
+            if(transmuter(reg[0]) != OK) printf("FAIL Transmutation finale...");
+        }
+    }
 }
 
 /// Fonction appelée à la fin de la partie.

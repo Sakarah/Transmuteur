@@ -68,8 +68,3 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
 
     return turnActions;
 }
-
-int minMaxPotential(bool me, GameSimulator& game, echantillon ech)
-{
-    //
-}
