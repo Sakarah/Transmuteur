@@ -22,5 +22,6 @@ void PlaceSample::undo(GameSimulator& sim)
 
 void PlaceSample::execute()
 {
-    placer_echantillon(_pos1, _pos2);
+    //printf("PlaceSample (%d,%d);(%d,%d)\n", _pos1.ligne, _pos1.colonne, _pos2.ligne, _pos2.colonne);
+    if(placer_echantillon(_pos1, _pos2) != OK) printf("FAIL PlaceSample...\n");
 }

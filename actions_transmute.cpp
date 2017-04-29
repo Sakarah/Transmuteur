@@ -47,5 +47,6 @@ void Transmute::undo(GameSimulator& sim)
 
 void Transmute::execute()
 {
-    transmuter(_region[0]);
+    //printf("Transmuter (%d,%d)\n", _region[0].ligne, _region[0].colonne);
+    if(transmuter(_region[0]) != OK) printf("FAIL Transmute...");
 }

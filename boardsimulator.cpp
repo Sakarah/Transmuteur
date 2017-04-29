@@ -116,7 +116,7 @@ bool BoardSimulator::isValidSamplePos(position pos1, position pos2, echantillon 
         if(isValid(neigh1) && typeCase(neigh1) == ech.element1) return true;
 
         position neigh2 = pos2 + diffPos;
-        if(isValid(neigh1) && typeCase(neigh2) == ech.element2) return true;
+        if(isValid(neigh2) && typeCase(neigh2) == ech.element2) return true;
     }
 
     return false;

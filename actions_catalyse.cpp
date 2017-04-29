@@ -36,5 +36,5 @@ void Catalyse::undo(GameSimulator& sim)
 
 void Catalyse::execute()
 {
-    catalyser(_pos, _toMe ? moi() : adversaire(), _type);
+    if(catalyser(_pos, _toMe ? moi() : adversaire(), _type) != OK) printf("FAIL Catalyse...");
 }

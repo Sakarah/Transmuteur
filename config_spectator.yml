@@ -3,11 +3,11 @@ verbose: 3
 
 clients:
 - ./champion.so
-- ./champion.so
+- /home/gbertholon/champion.so
 
 names:
- - Joueur 1
- - Joueur 2
+ - Moi
+ - Autre
 
 spectators:
 - /usr/share/stechec2/prologin2017/gui/gui.so
