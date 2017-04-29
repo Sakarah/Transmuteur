@@ -1,7 +1,7 @@
 #include "prologin.hh"
 #include "gamesimulator.h"
-#include "actions/placesample.h"
-#include "actions/transmute.h"
+#include "actions_placesample.h"
+#include "actions_transmute.h"
 #include "prototypes.h"
 
 // Donne l'ownership de l'action au récepteur

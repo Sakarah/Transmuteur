@@ -1,4 +1,4 @@
-#include "catalyse.h"
+#include "actions_catalyse.h"
 
 Catalyse::Catalyse(bool fromMe, bool toMe, position pos, case_type dest_type)
 {

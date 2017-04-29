@@ -1,7 +1,7 @@
 #ifndef WIPEOUT_H
 #define WIPEOUT_H
 
-#include "actions/action.h"
+#include "actions_action.h"
 
 /*class Wipeout : public Action
 {

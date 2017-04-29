@@ -1,5 +1,5 @@
-#include "transmute.h"
-#include "../prototypes.h"
+#include "actions_transmute.h"
+#include "prototypes.h"
 
 Transmute::Transmute(bool me, std::vector<position> region)
 {

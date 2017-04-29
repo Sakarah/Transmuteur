@@ -1,7 +1,7 @@
 #ifndef CATALYSE_H
 #define CATALYSE_H
 
-#include "action.h"
+#include "actions_action.h"
 
 class Catalyse : public Action
 {

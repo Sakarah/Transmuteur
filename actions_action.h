@@ -1,7 +1,7 @@
 #ifndef ACTION_H
 #define ACTION_H
 
-#include "../gamesimulator.h"
+#include "gamesimulator.h"
 
 /// Représente une action ingame. La classe de base correspond à une noop.
 class Action

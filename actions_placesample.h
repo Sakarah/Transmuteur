@@ -1,7 +1,7 @@
 #ifndef PLACESAMPLE_H
 #define PLACESAMPLE_H
 
-#include "action.h"
+#include "actions_action.h"
 
 class PlaceSample : public Action
 {

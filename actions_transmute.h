@@ -1,7 +1,7 @@
 #ifndef TRANSMUTE_H
 #define TRANSMUTE_H
 
-#include "action.h"
+#include "actions_action.h"
 
 class Transmute : public Action
 {

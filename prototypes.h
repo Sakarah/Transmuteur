@@ -2,7 +2,7 @@
 #define PROTOTYPES_H
 
 #include "prologin.hh"
-#include "actions/action.h"
+#include "actions_action.h"
 
 const position DIFF_POS[4] = { position{1,0}, position{0,1}, position{-1,0}, position{0,-1} };
 
