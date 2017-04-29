@@ -3,7 +3,7 @@
 
 #include "actions_action.h"
 
-/*class Wipeout : public Action
+class Wipeout : public Action
 {
 public:
     Wipeout(bool me);
@@ -11,7 +11,8 @@ public:
     void undo(GameSimulator&) override;
     void execute() override;
 private:
-
-};*/
+    bool _me;
+    BoardSimulator _backupBoard;
+};
 
 #endif // WIPEOUT_H

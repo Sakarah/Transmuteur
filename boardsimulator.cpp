@@ -19,6 +19,13 @@ BoardSimulator::BoardSimulator(int idPlayer)
     }
 }
 
+void BoardSimulator::swap(BoardSimulator& other)
+{
+    std::swap(_playerId, other._playerId);
+    std::swap(_board, other._board);
+    std::swap(_typeCount, other._typeCount);
+}
+
 case_type BoardSimulator::typeCase(position pos) const { return _board[pos.ligne][pos.colonne]; }
 
 void BoardSimulator::putSample(position pos1, position pos2, echantillon ech)
@@ -45,40 +52,6 @@ void BoardSimulator::wipeout()
         }
     }
 }
-
-/*std::vector<position> BoardSimulator::region(position regStartPos) const
-{
-    bool visitedPos[TAILLE_ETABLI][TAILLE_ETABLI];
-    for(int x = 0 ; x < TAILLE_ETABLI ; x++)
-    {
-        for(int y = 0 ; y < TAILLE_ETABLI ; y++)
-            visitedPos[x][y] = 0;
-    }
-
-    std::vector<position> region;
-    region.push_back(regStartPos);
-    visitedPos[regStartPos.ligne][regStartPos.colonne] = true;
-    unsigned posLast = 0;
-
-    while(posLast < region.size())
-    {
-        position curPos = region[posLast];
-        if(!visitedPos[curPos.ligne][curPos.colonne])
-        {
-            for(position diffPos : DIFF_POS)
-            {
-                position newPos = curPos + diffPos;
-                if(!isValid(newPos)) continue;
-                if(visitedPos[newPos.ligne][newPos.colonne]) continue;
-                visitedPos[newPos.ligne][newPos.colonne] = true;
-                region.push_back(newPos);
-            }
-        }
-        posLast++;
-    }
-
-    return region;
-}*/
 
 void BoardSimulator::fillRegion(std::vector<position>& reg, case_type type)
 {

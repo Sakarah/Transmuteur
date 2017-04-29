@@ -6,14 +6,15 @@
 class BoardSimulator
 {
 public:
+    BoardSimulator() = default;
     BoardSimulator(int idPlayer);
+    void swap(BoardSimulator&);
 
     case_type typeCase(position) const;
     void putSample(position, position, echantillon);
     void setCase(position, case_type);
     void wipeout();
 
-    //std::vector<position> region(position) const;
     void fillRegion(std::vector<position>&, case_type);
     std::vector<std::vector<position>> getRegions() const;
 

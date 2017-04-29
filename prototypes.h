@@ -4,6 +4,7 @@
 #include "prologin.hh"
 #include "actions_action.h"
 
+const int MIN_MAX_DEPTH = 3;
 const position DIFF_POS[4] = { position{1,0}, position{0,1}, position{-1,0}, position{0,-1} };
 
 bool isValid(position pos);

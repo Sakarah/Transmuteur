@@ -13,10 +13,11 @@ struct GameSimulator
         oppCatalyser = 0;
     }
 
-    int gamePotential(bool me, bool wipeout = false) const
+    int gamePotential(bool me) const
     {
-        if(me) return (wipeout ? 0 : myBoard.boardPotential()) + myScore + myCatalyser;
-        else return (wipeout ? 0 : oppBoard.boardPotential()) + oppScore + oppCatalyser;
+        int score = myBoard.boardPotential() + myScore + myCatalyser;
+        score -= oppBoard.boardPotential() + oppScore + oppCatalyser;
+        return me ? score : -score;
     }
 
     BoardSimulator myBoard;

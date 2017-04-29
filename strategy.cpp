@@ -2,6 +2,7 @@
 #include "gamesimulator.h"
 #include "actions_placesample.h"
 #include "actions_transmute.h"
+#include "actions_wipeout.h"
 #include "prototypes.h"
 
 // Donne l'ownership de l'action au récepteur
@@ -9,8 +10,10 @@ std::pair<Action*, int> chooseBestPlaceSample(bool me, GameSimulator& game, echa
 {
     BoardSimulator& board = me ? game.myBoard : game.oppBoard;
 
-    int maxBoard = game.gamePotential(me, true);
-    Action* bestAction = nullptr;
+    Action* bestAction = new Wipeout(me);
+    bestAction->simulate(game);
+    int maxBoard = game.gamePotential(me);
+    bestAction->undo(game);
     for(position_echantillon pos : board.possibleSamplePos(ech))
     {
         PlaceSample* action = new PlaceSample(me, pos.pos1, pos.pos2, ech);
@@ -64,4 +67,9 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
     turnActions.gamePotential = bestPlaceSampleAction.second;
 
     return turnActions;
+}
+
+int minMaxPotential(bool me, GameSimulator& game, echantillon ech)
+{
+    //
 }
