@@ -9,7 +9,7 @@ void Wipeout::simulate(GameSimulator& sim)
 {
     if(_me)
     {
-        _backupBoard = sim.myBoard;
+        _backupBoard = sim.myBoard.copy();
         sim.myBoard.wipeout();
     }
     else

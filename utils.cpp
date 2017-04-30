@@ -26,6 +26,34 @@ int regionCatalyserValue(int size, case_type type)
     else return 0;
 }
 
+std::vector<echantillon> nextPossibleSamples(echantillon ech)
+{
+    std::vector<echantillon> nextEch;
+    if(ech.element1 == ech.element2)
+    {
+        for(int i = 1 ; i < NB_TYPE_CASES ; i++)
+        {
+            nextEch.push_back(echantillon{ech.element1, static_cast<case_type>(i)});
+        }
+    }
+    else
+    {
+        nextEch.push_back(ech);
+        for(int i = 1 ; i < NB_TYPE_CASES ; i++)
+        {
+            if(i == ech.element1) continue;
+            nextEch.push_back(echantillon{ech.element1, static_cast<case_type>(i)});
+        }
+        for(int i = 1 ; i < NB_TYPE_CASES ; i++)
+        {
+            if(i == ech.element2) continue;
+            nextEch.push_back(echantillon{static_cast<case_type>(i), ech.element2});
+        }
+    }
+
+    return nextEch;
+}
+
 position operator+(position p1, position p2)
 {
     return position{p1.ligne+p2.ligne, p1.colonne+p2.colonne};

@@ -19,6 +19,21 @@ BoardSimulator::BoardSimulator(int idPlayer)
     }
 }
 
+BoardSimulator BoardSimulator::copy()
+{
+    BoardSimulator newSim;
+    newSim._playerId = _playerId;
+
+    for(int i = 0 ; i < NB_TYPE_CASES ; i++) newSim._typeCount[i] = _typeCount[i];
+
+    for(int l = 0 ; l < TAILLE_ETABLI ; l++)
+    {
+        for(int c = 0 ; c < TAILLE_ETABLI ; c++) newSim._board[l][c] = _board[l][c];
+    }
+
+    return newSim;
+}
+
 void BoardSimulator::swap(BoardSimulator& other)
 {
     std::swap(_playerId, other._playerId);
@@ -158,3 +173,15 @@ int BoardSimulator::boardPotential() const
 }
 
 int BoardSimulator::typeCount(case_type type) const { return _typeCount[type]; }
+
+void BoardSimulator::printBoard() const
+{
+    for(int x = 0 ; x < TAILLE_ETABLI ; x++)
+    {
+        for(int y = 0 ; y < TAILLE_ETABLI ; y++)
+        {
+            printf("%d", _board[x][y]);
+        }
+        printf("\n");
+    }
+}

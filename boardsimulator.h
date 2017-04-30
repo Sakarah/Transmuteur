@@ -8,6 +8,7 @@ class BoardSimulator
 public:
     BoardSimulator() = default;
     BoardSimulator(int idPlayer);
+    BoardSimulator copy();
     void swap(BoardSimulator&);
 
     case_type typeCase(position) const;
@@ -23,6 +24,8 @@ public:
 
     int boardPotential() const;
     int typeCount(case_type) const;
+
+    void printBoard() const;
 
 private:
     int _playerId;

@@ -61,10 +61,26 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
         }
     }
 
-    TurnActions turnActions;
-    if(bestTransmuteAction) turnActions.actionList.push_back(bestTransmuteAction);
-    if(bestPlaceSampleAction.first) turnActions.actionList.push_back(bestPlaceSampleAction.first);
-    turnActions.gamePotential = bestPlaceSampleAction.second;
+    TurnActions thisTurnActions;
+    if(bestTransmuteAction) thisTurnActions.actionList.push_back(bestTransmuteAction);
+    thisTurnActions.actionList.push_back(bestPlaceSampleAction.first);
+    thisTurnActions.gamePotential = bestPlaceSampleAction.second;
 
-    return turnActions;
+    if(!me) return thisTurnActions;
+
+    for(Action* a : thisTurnActions.actionList) a->simulate(game);
+
+    int worstEchValue = -1000000000;
+    for(echantillon advEch : nextPossibleSamples(ech))
+    {
+        TurnActions oppTurnActions = chooseBestActions(!me, game, advEch);
+        for(Action* a : oppTurnActions.actionList) delete a;
+        if(oppTurnActions.gamePotential > worstEchValue)
+        {
+            worstEchValue = oppTurnActions.gamePotential;
+            thisTurnActions.echantillonAdv = advEch;
+        }
+    }
+
+    return thisTurnActions;
 }

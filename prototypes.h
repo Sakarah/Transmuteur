@@ -4,7 +4,7 @@
 #include "prologin.hh"
 #include "actions_action.h"
 
-const int MIN_MAX_DEPTH = 3;
+const int MIN_MAX_DEPTH = 1;
 const position DIFF_POS[4] = { position{1,0}, position{0,1}, position{-1,0}, position{0,-1} };
 
 bool isValid(position pos);
@@ -15,6 +15,8 @@ int regionCatalyserValue(int size, case_type type);
 position operator+(position p1, position p2);
 position operator-(position p1, position p2);
 
+std::vector<echantillon> nextPossibleSamples(echantillon ech);
+
 struct TurnActions
 {
     std::vector<Action*> actionList;
@@ -24,6 +26,5 @@ struct TurnActions
 
 std::pair<Action*, int> chooseBestPlaceSample(bool me, GameSimulator& game, echantillon ech);
 TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech);
-
 
 #endif // PROTOTYPES_H
