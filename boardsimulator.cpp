@@ -41,6 +41,20 @@ void BoardSimulator::swap(BoardSimulator& other)
     std::swap(_typeCount, other._typeCount);
 }
 
+int BoardSimulator::hash() const
+{
+    int hash = 0;
+    for(int l = 0 ; l < TAILLE_ETABLI ; l++)
+    {
+        for(int c = 0 ; c < TAILLE_ETABLI ; c++)
+        {
+            hash <<= 1;
+            hash ^= _board[l][c];
+        }
+    }
+    return hash;
+}
+
 case_type BoardSimulator::typeCase(position pos) const { return _board[pos.ligne][pos.colonne]; }
 
 void BoardSimulator::putSample(position pos1, position pos2, echantillon ech)

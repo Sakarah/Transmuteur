@@ -22,6 +22,13 @@ struct GameSimulator
         return me ? score : -score;
     }
 
+    int hash() const
+    {
+        int h1 = myBoard.hash();
+        int h2 = oppBoard.hash();
+        return h1 ^ (h2 << 1);
+    }
+
     BoardSimulator myBoard;
     BoardSimulator oppBoard;
 

@@ -2,6 +2,9 @@
 #include "gamesimulator.h"
 #include "prototypes.h"
 #include <chrono>
+#include <map>
+
+static std::map<int, int> cycleMap;
 
 /// Fonction appelée au début de la partie.
 void partie_init()
@@ -17,6 +20,20 @@ void jouer_tour()
 
 
     GameSimulator game;
+    int gameHash = game.hash();
+    if(cycleMap.count(gameHash))
+    {
+        if(game.myScore - game.oppScore - cycleMap[gameHash] < 0) // Cycle négatif
+        {
+            int caseNumber = (tour_actuel()*7/2)%36; // 7 premier avec 36
+            position pos = position{caseNumber/6,caseNumber%6};
+            transmuter(pos);
+            game = GameSimulator();
+            gameHash = game.hash();
+        }
+    }
+    cycleMap[gameHash] = game.myScore - game.oppScore;
+
     TurnActions turnActions = chooseBestActions(true, game, echantillon_tour());
 
     for(Action* a : turnActions.actionList)
