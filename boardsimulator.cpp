@@ -1,6 +1,7 @@
 #include "boardsimulator.h"
 #include "prologin.hh"
 #include "prototypes.h"
+#include <algorithm>
 
 BoardSimulator::BoardSimulator(int idPlayer)
 {
@@ -184,6 +185,19 @@ bool BoardSimulator::isValidSamplePos(position pos1, position pos2, echantillon 
     return false;
 }
 
+bool nearCenterCmp(const position_echantillon& a, const position_echantillon& b)
+{
+    const position twoTimesCenter = position{TAILLE_ETABLI, TAILLE_ETABLI};
+
+    position aToCenter = a.pos1 + a.pos2 - twoTimesCenter;
+    int aDistSqrCenter = (aToCenter.colonne*aToCenter.colonne)+(aToCenter.ligne*aToCenter.ligne);
+
+    position bToCenter = b.pos1 + b.pos2 - twoTimesCenter;
+    int bDistSqrCenter = (bToCenter.colonne*bToCenter.colonne)+(bToCenter.ligne*bToCenter.ligne);
+
+    return aDistSqrCenter < bDistSqrCenter;
+}
+
 std::vector<position_echantillon> BoardSimulator::possibleSamplePos(echantillon ech) const
 {
     std::vector<position_echantillon> result;
@@ -203,6 +217,8 @@ std::vector<position_echantillon> BoardSimulator::possibleSamplePos(echantillon 
             }
         }
     }
+
+    std::sort(result.begin(), result.end(), nearCenterCmp); // Favorise légèrement les cases du centre
 
     return result;
 }
