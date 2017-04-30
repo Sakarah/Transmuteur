@@ -24,6 +24,7 @@ public:
     std::vector<position_echantillon> possibleSamplePos(echantillon) const;
 
     int boardPotential() const;
+    int countHoles() const;
     int typeCount(case_type) const;
 
     void printBoard() const;

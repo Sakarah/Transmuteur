@@ -29,3 +29,8 @@ void Wipeout::execute()
 {
     printf("Wipeout volontaire !\n");
 }
+
+void Wipeout::debugPrint()
+{
+    printf("Wipeout\n");
+}

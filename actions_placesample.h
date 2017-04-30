@@ -10,6 +10,7 @@ public:
     void simulate(GameSimulator&) override;
     void undo(GameSimulator&) override;
     void execute() override;
+    void debugPrint() override;
 private:
     bool _me;
     position _pos1;

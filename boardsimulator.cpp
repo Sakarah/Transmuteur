@@ -184,7 +184,34 @@ int BoardSimulator::boardPotential() const
         potential += regionGoldValue(region.size() + regionExtension(region), typeCase(region[0]));
         potential += regionCatalyserValue(region.size() + regionExtension(region), typeCase(region[0]));
     }
+    //potential -= countHoles();
     return potential;
+}
+
+int BoardSimulator::countHoles() const
+{
+    int holes = 0;
+
+    for(int x = 0 ; x < TAILLE_ETABLI ; x++)
+    {
+        for(int y = 0 ; y < TAILLE_ETABLI ; y++)
+        {
+            position pos = position{x,y};
+            if(typeCase(pos) != VIDE) continue;
+
+            bool hole = true;
+            for(position diffPos : DIFF_POS)
+            {
+                position testPos = pos + diffPos;
+                if(!isValid(testPos)) continue;
+                if(typeCase(testPos) == VIDE) hole = false;
+            }
+
+            if(hole) holes++;
+        }
+    }
+
+    return holes;
 }
 
 int BoardSimulator::typeCount(case_type type) const { return _typeCount[type]; }

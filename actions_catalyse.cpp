@@ -39,3 +39,9 @@ void Catalyse::execute()
     erreur err = catalyser(_pos, _toMe ? moi() : adversaire(), _type);
     if(err != OK) printf("FAIL Catalyse (%d)...", err);
 }
+
+void Catalyse::debugPrint()
+{
+    if(_toMe) printf("Catalyse Me (%d,%d)->%d\n", _pos.ligne, _pos.colonne, _type);
+    else printf("Catalyse Opp (%d,%d)->%d\n", _pos.ligne, _pos.colonne, _type);
+}
