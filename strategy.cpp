@@ -116,16 +116,30 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
     }
 
     // On cherche à donner la pire pièce à l'adversaire
-    int worstAdvPotential = INFINITY;
+    TurnActions worstAdvTurnActions;
+    worstAdvTurnActions.gamePotential = INFINITY;
     for(echantillon advEch : nextPossibleSamples(ech))
     {
         TurnActions oppTurnActions = chooseBestActions(!me, game, advEch);
-        for(Action* a : oppTurnActions.actionList) delete a;
-        if(oppTurnActions.gamePotential < worstAdvPotential)
+        if(oppTurnActions.gamePotential < worstAdvTurnActions.gamePotential)
         {
-            worstAdvPotential = oppTurnActions.gamePotential;
+            for(Action* a : worstAdvTurnActions.actionList) delete a;
+            worstAdvTurnActions = oppTurnActions;
             thisTurnActions.echantillonAdv = advEch;
         }
+        else
+        {
+            for(Action* a : oppTurnActions.actionList) delete a;
+        }
+    }
+
+    // On se défend d'une attaque contre nous en récoltant les points qu'on estime
+    // pertinent pour l'adversaire de récupérer
+    for(Action* a : worstAdvTurnActions.actionList)
+    {
+        Action* reaction = a->defenseReaction(game);
+        if(reaction) thisTurnActions.actionList.push_back(reaction);
+        delete a;
     }
 
     return thisTurnActions;

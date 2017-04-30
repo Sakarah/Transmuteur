@@ -11,6 +11,7 @@ public:
     void undo(GameSimulator&) override;
     void execute() override;
     void debugPrint() override;
+    Action* defenseReaction(GameSimulator&) override;
 private:
     bool _fromMe;
     bool _toMe;

@@ -12,6 +12,7 @@ public:
     virtual void undo(GameSimulator&) = 0;
     virtual void execute() = 0;
     virtual void debugPrint() = 0;
+    virtual Action* defenseReaction(GameSimulator&) { return nullptr; }
 };
 
 #endif // ACTION_H

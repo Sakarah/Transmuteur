@@ -132,6 +132,39 @@ std::vector<std::vector<position>> BoardSimulator::getRegions() const
     return regions;
 }
 
+std::vector<position> BoardSimulator::regionOf(position initPos) const
+{
+    bool visitedPos[TAILLE_ETABLI][TAILLE_ETABLI];
+    for(int x = 0 ; x < TAILLE_ETABLI ; x++)
+    {
+        for(int y = 0 ; y < TAILLE_ETABLI ; y++)
+            visitedPos[x][y] = false;
+    }
+
+    std::vector<position> region;
+    region.push_back(initPos);
+    visitedPos[initPos.ligne][initPos.colonne] = true;
+    case_type regionType = typeCase(initPos);
+    unsigned posLast = 0;
+
+    while(posLast < region.size())
+    {
+        position curPos = region[posLast];
+        for(position diffPos : DIFF_POS)
+        {
+            position newPos = curPos + diffPos;
+            if(!isValid(newPos)) continue;
+            if(typeCase(newPos) != regionType) continue;
+            if(visitedPos[newPos.ligne][newPos.colonne]) continue;
+            visitedPos[newPos.ligne][newPos.colonne] = true;
+            region.push_back(newPos);
+        }
+        posLast++;
+    }
+
+    return region;
+}
+
 bool BoardSimulator::isValidSamplePos(position pos1, position pos2, echantillon ech) const
 {
     // Precond : pos1 et pos2 sont contigues et valides

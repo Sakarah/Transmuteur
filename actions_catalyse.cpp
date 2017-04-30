@@ -1,4 +1,5 @@
 #include "actions_catalyse.h"
+#include "actions_transmute.h"
 
 Catalyse::Catalyse(bool fromMe, bool toMe, position pos, case_type dest_type)
 {
@@ -44,4 +45,10 @@ void Catalyse::debugPrint()
 {
     if(_toMe) printf("Catalyse Me (%d,%d)->%d\n", _pos.ligne, _pos.colonne, _type);
     else printf("Catalyse Opp (%d,%d)->%d\n", _pos.ligne, _pos.colonne, _type);
+}
+
+Action* Catalyse::defenseReaction(GameSimulator& game)
+{
+    if(!_toMe) return nullptr;
+    return new Transmute(true, game.myBoard.regionOf(_pos));
 }
