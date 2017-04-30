@@ -20,8 +20,6 @@ void jouer_tour()
     start = std::chrono::system_clock::now();
 
 
-    afficher_etablis();
-
     GameSimulator game;
     int gameHash = game.myBoard.hash();
     if(cycleMap.count(gameHash))

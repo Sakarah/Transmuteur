@@ -9,7 +9,7 @@ struct GameSimulator
     {
         myScore = score(moi());
         oppScore = score(adversaire());
-        myCatalyser = 0;
+        myCatalyser = nombre_catalyseurs();
         oppCatalyser = 0;
         penalty = 0;
     }
