@@ -10,7 +10,7 @@ public:
     BoardSimulator(int idPlayer);
     BoardSimulator copy();
     void swap(BoardSimulator&);
-    int hash() const;
+    long long hash() const;
 
     case_type typeCase(position) const;
     void putSample(position, position, echantillon);

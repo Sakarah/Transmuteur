@@ -42,9 +42,9 @@ void BoardSimulator::swap(BoardSimulator& other)
     std::swap(_typeCount, other._typeCount);
 }
 
-int BoardSimulator::hash() const
+long long BoardSimulator::hash() const
 {
-    int hash = 0;
+    long long hash = 0;
     for(int l = 0 ; l < TAILLE_ETABLI ; l++)
     {
         for(int c = 0 ; c < TAILLE_ETABLI ; c++)
@@ -229,7 +229,7 @@ std::pair<int,int> BoardSimulator::boardPotential() const
     int potentialCatalyser = 0;
     for(std::vector<position> region : getRegions())
     {
-        // On s'attend à ce qu'une case sur le plateau puisse rapporter par la suite.
+        // On s'attend à ce qu'une case sur le plateau puisse rapporter par la suite si elle n'est pas isolée.
         potentialGold += regionGoldValue(region.size() + (isRegionIsolated(region) ? 0 : 1), typeCase(region[0]));
         potentialCatalyser += regionCatalyserValue(region.size(), typeCase(region[0]));
     }

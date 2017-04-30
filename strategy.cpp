@@ -69,6 +69,7 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
     thisTurnActions.actionList.push_back(bestPlaceSampleAction.first);
     thisTurnActions.gamePotential = bestPlaceSampleAction.second;
 
+    // On simule la meilleure combinaison trouvée
     for(Action* a : thisTurnActions.actionList) a->simulate(game);
 
     // On utilise les catalyseurs ici -> Stratégie très gloutonne
@@ -77,7 +78,7 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
     {
         Action* bestCatalyse = nullptr;
         int bestCatalyseVal = game.gamePotential(me, false);
-        for(int player = 0 ; player < 2 ; player++)
+        for(int player = 1 ; player >= 0 ; player--)
         {
             BoardSimulator& board = player ? game.myBoard : game.oppBoard;
             for(int x = 0 ; x < TAILLE_ETABLI ; x++)
@@ -104,7 +105,11 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
             }
         }
 
-        if(!bestCatalyse) break;
+        if(!bestCatalyse)
+        {
+            printf("Surplus de catalyseurs...\n");
+            break;
+        }
         bestCatalyse->simulate(game);
         thisTurnActions.actionList.push_back(bestCatalyse);
     }

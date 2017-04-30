@@ -2,6 +2,7 @@
 #define GAMESIMULATOR_H
 
 #include "boardsimulator.h"
+#include "prototypes.h"
 
 struct GameSimulator
 {
@@ -18,13 +19,16 @@ struct GameSimulator
     {
         std::pair<int,int> myBoardPotential = myBoard.boardPotential();
         std::pair<int,int> oppBoardPotential = oppBoard.boardPotential();
+        int catalyserVal = catalyserValue();
+        int onBoardCatalyserVal = (CATALYSER_BASE_VAL + catalyserVal) / 2;
+
         int score = myBoardPotential.first + myScore;
+        score += onBoardCatalyserVal * myBoardPotential.second;
         score -= oppBoardPotential.first + oppScore;
+        score -= onBoardCatalyserVal * oppBoardPotential.second;
         score -= penalty;
-        if(withCatalyser)
-        {
-            score += catalyserValue() * (myCatalyser + myBoardPotential.second - oppCatalyser - oppBoardPotential.second);
-        }
+        if(withCatalyser) score += catalyserVal * (myCatalyser - oppCatalyser);
+
         return me ? score : -score;
     }
 

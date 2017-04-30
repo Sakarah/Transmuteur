@@ -1,5 +1,6 @@
 #include "actions_transmute.h"
 #include "prototypes.h"
+#include "gamesimulator.h"
 
 Transmute::Transmute(bool me, std::vector<position> region)
 {
@@ -20,14 +21,12 @@ void Transmute::simulate(GameSimulator& sim)
     if(_me)
     {
         if(_region.size() == 1) sim.penalty += ONE_PENALTY;
-        if(_region.size() == 2) sim.penalty += TWO_PENALTY;
         sim.myScore += _diffScore;
         sim.myCatalyser += _diffCatalyser;
     }
     else
     {
         if(_region.size() == 1) sim.penalty -= ONE_PENALTY;
-        if(_region.size() == 2) sim.penalty -= TWO_PENALTY;
         sim.oppScore += _diffScore;
         sim.oppCatalyser += _diffCatalyser;
     }
@@ -39,7 +38,6 @@ void Transmute::undo(GameSimulator& sim)
     {
         sim.myBoard.fillRegion(_region, _type);
         if(_region.size() == 1) sim.penalty -= ONE_PENALTY;
-        if(_region.size() == 2) sim.penalty -= TWO_PENALTY;
         sim.myScore -= _diffScore;
         sim.myCatalyser -= _diffCatalyser;
     }
@@ -47,7 +45,6 @@ void Transmute::undo(GameSimulator& sim)
     {
         sim.oppBoard.fillRegion(_region, _type);
         if(_region.size() == 1) sim.penalty += ONE_PENALTY;
-        if(_region.size() == 2) sim.penalty += TWO_PENALTY;
         sim.oppScore -= _diffScore;
         sim.oppCatalyser -= _diffCatalyser;
     }
@@ -55,7 +52,8 @@ void Transmute::undo(GameSimulator& sim)
 
 void Transmute::execute()
 {
-    if(transmuter(_region[0]) != OK) printf("FAIL Transmute...");
+    erreur err = transmuter(_region[0]);
+    if(err != OK) printf("FAIL Transmute (%d,%d)...\n", _region[0].ligne, _region[0].colonne);
 }
 
 void Transmute::debugPrint()

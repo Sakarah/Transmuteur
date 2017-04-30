@@ -10,7 +10,7 @@ const position DIFF_POS[4] = { position{1,0}, position{0,1}, position{-1,0}, pos
 
 const int WIPEOUT_PENALTY = 5;
 const int ONE_PENALTY = 5;
-const int TWO_PENALTY = 0;
+const int CATALYSER_BASE_VAL = 8;
 
 bool isValid(position pos);
 bool isSide(position pos);

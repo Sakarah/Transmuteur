@@ -1,1 +1,4 @@
 champion.tgz
+*.o
+*.o.d
+champion.so

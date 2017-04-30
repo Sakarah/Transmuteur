@@ -2,6 +2,7 @@
 #define WIPEOUT_H
 
 #include "actions_action.h"
+#include "gamesimulator.h"
 
 class Wipeout : public Action
 {

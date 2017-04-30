@@ -5,7 +5,7 @@
 #include <chrono>
 #include <map>
 
-static std::map<int, int> cycleMap;
+static std::map<long long, int> cycleMap;
 
 /// Fonction appelée au début de la partie.
 void partie_init()
@@ -21,7 +21,7 @@ void jouer_tour()
 
 
     GameSimulator game;
-    int gameHash = game.myBoard.hash();
+    long long gameHash = game.myBoard.hash();
     if(cycleMap.count(gameHash))
     {
         printf("Cycle detected : ");
@@ -33,6 +33,7 @@ void jouer_tour()
             position pos = position{caseNumber/6,caseNumber%6};
             transmuter(pos);
             game.myBoard = BoardSimulator(moi());
+            game.myCatalyser = nombre_catalyseurs();
             gameHash = game.myBoard.hash();
         }
         else printf("Winning cycle\n");
@@ -58,7 +59,6 @@ void jouer_tour()
 
 
     end = std::chrono::system_clock::now();
-
     std::chrono::duration<double> elapsed_seconds = end-start;
     printf("Temps: %f s\n", elapsed_seconds.count());
 }

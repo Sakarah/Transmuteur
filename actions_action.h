@@ -1,7 +1,8 @@
 #ifndef ACTION_H
 #define ACTION_H
 
-#include "gamesimulator.h"
+#include "prologin.hh"
+class GameSimulator;
 
 /// Représente une action ingame.
 class Action
