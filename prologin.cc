@@ -1,6 +1,7 @@
 #include "prologin.hh"
 #include "gamesimulator.h"
 #include "prototypes.h"
+#include "actions_wipeout.h"
 #include <chrono>
 #include <map>
 
@@ -18,6 +19,8 @@ void jouer_tour()
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
 
+
+    afficher_etablis();
 
     GameSimulator game;
     int gameHash = game.myBoard.hash();
@@ -51,12 +54,8 @@ void jouer_tour()
 
     if(tour_actuel() >= NB_TOURS-1)
     {
-        BoardSimulator endBoard(moi());
-        for(std::vector<position> reg : endBoard.getRegions())
-        {
-            if(reg.size() < 2) continue;
-            if(transmuter(reg[0]) != OK) printf("FAIL Transmutation finale...");
-        }
+        Wipeout wipe(true);
+        wipe.execute();
     }
 
 

@@ -25,7 +25,7 @@ public:
     std::vector<position_echantillon> possibleSamplePos(echantillon) const;
 
     std::pair<int, int> boardPotential() const;
-    int countHoles() const;
+    bool isRegionIsolated(std::vector<position>&) const;
     int typeCount(case_type) const;
 
     void printBoard() const;

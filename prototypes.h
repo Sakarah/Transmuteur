@@ -8,8 +8,9 @@ const int INFINITY = 1000000000;
 const int MIN_MAX_DEPTH = 1;
 const position DIFF_POS[4] = { position{1,0}, position{0,1}, position{-1,0}, position{0,-1} };
 
-const int ONE_PENALTY = 40;
-const int TWO_PENALTY = 20;
+const int WIPEOUT_PENALTY = 15;
+const int ONE_PENALTY = 10;
+const int TWO_PENALTY = 10;
 
 bool isValid(position pos);
 bool isSide(position pos);

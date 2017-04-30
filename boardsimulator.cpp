@@ -132,21 +132,6 @@ std::vector<std::vector<position>> BoardSimulator::getRegions() const
     return regions;
 }
 
-int BoardSimulator::regionExtension(std::vector<position>& region) const
-{
-    int extension = 0;
-    for(position pos : region)
-    {
-        for(position diffPos : DIFF_POS)
-        {
-            position testPos = pos + diffPos;
-            if(!isValid(testPos)) continue;
-            if(typeCase(testPos) == VIDE) extension++;
-        }
-    }
-    return ((extension+1) / 2) + 1; // On estime qu'on pourra occuper la moitié (arrondi sup) des espaces autour
-}
-
 bool BoardSimulator::isValidSamplePos(position pos1, position pos2, echantillon ech) const
 {
     // Precond : pos1 et pos2 sont contigues et valides
@@ -196,37 +181,25 @@ std::pair<int,int> BoardSimulator::boardPotential() const
     for(std::vector<position> region : getRegions())
     {
         // On s'attend à ce qu'une case sur le plateau puisse rapporter par la suite.
-        potentialGold += regionGoldValue(region.size() + 2, typeCase(region[0]));
+        potentialGold += regionGoldValue(region.size() + (isRegionIsolated(region) ? 0 : 1), typeCase(region[0]));
         potentialCatalyser += regionCatalyserValue(region.size(), typeCase(region[0]));
     }
-    //potential -= countHoles();
     return std::make_pair(potentialGold, potentialCatalyser);
 }
 
-int BoardSimulator::countHoles() const
+bool BoardSimulator::isRegionIsolated(std::vector<position>& reg) const
 {
-    int holes = 0;
-
-    for(int x = 0 ; x < TAILLE_ETABLI ; x++)
+    for(position pos : reg)
     {
-        for(int y = 0 ; y < TAILLE_ETABLI ; y++)
+        for(position diffPos : DIFF_POS)
         {
-            position pos = position{x,y};
-            if(typeCase(pos) != VIDE) continue;
-
-            bool hole = true;
-            for(position diffPos : DIFF_POS)
-            {
-                position testPos = pos + diffPos;
-                if(!isValid(testPos)) continue;
-                if(typeCase(testPos) == VIDE) hole = false;
-            }
-
-            if(hole) holes++;
+            position testPos = pos + diffPos;
+            if(!isValid(testPos)) continue;
+            if(typeCase(testPos) == VIDE) return false;
         }
     }
 
-    return holes;
+    return true;
 }
 
 int BoardSimulator::typeCount(case_type type) const { return _typeCount[type]; }

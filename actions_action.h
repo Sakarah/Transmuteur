@@ -3,7 +3,7 @@
 
 #include "gamesimulator.h"
 
-/// Représente une action ingame. La classe de base correspond à une noop.
+/// Représente une action ingame.
 class Action
 {
 public:

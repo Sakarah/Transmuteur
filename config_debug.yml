@@ -3,8 +3,10 @@ verbose: 3
 
 clients:
 - ./champion.so
-- /home/gbertholon/champion.so
+- ./champion.so
+
+time: 0
 
 names:
  - Moi
- - Autre
+ - Moi

@@ -15,6 +15,7 @@ std::pair<Action*, int> chooseBestPlaceSample(bool me, GameSimulator& game, echa
     bestAction->simulate(game);
     int maxBoard = game.gamePotential(me, true);
     bestAction->undo(game);
+
     for(position_echantillon pos : board.possibleSamplePos(ech))
     {
         PlaceSample* action = new PlaceSample(me, pos.pos1, pos.pos2, ech);

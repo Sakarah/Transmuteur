@@ -14,6 +14,8 @@ public:
 private:
     bool _me;
     BoardSimulator _backupBoard;
+    int _scoreDiff;
+    int _catalyserDiff;
 };
 
 #endif // WIPEOUT_H
