@@ -20,17 +20,21 @@ void jouer_tour()
 
 
     GameSimulator game;
-    int gameHash = game.hash();
+    int gameHash = game.myBoard.hash();
     if(cycleMap.count(gameHash))
     {
+        printf("Cycle detected : ");
         if(game.myScore - game.oppScore - cycleMap[gameHash] < 0) // Cycle négatif
         {
+            printf("Losing cycle\n");
+
             int caseNumber = (tour_actuel()*7/2)%36; // 7 premier avec 36
             position pos = position{caseNumber/6,caseNumber%6};
             transmuter(pos);
-            game = GameSimulator();
-            gameHash = game.hash();
+            game.myBoard = BoardSimulator(moi());
+            gameHash = game.myBoard.hash();
         }
+        else printf("Winning cycle\n");
     }
     cycleMap[gameHash] = game.myScore - game.oppScore;
 

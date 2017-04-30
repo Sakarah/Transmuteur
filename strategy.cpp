@@ -13,13 +13,13 @@ std::pair<Action*, int> chooseBestPlaceSample(bool me, GameSimulator& game, echa
 
     Action* bestAction = new Wipeout(me);
     bestAction->simulate(game);
-    int maxBoard = game.gamePotential(me);
+    int maxBoard = game.gamePotential(me, true);
     bestAction->undo(game);
     for(position_echantillon pos : board.possibleSamplePos(ech))
     {
         PlaceSample* action = new PlaceSample(me, pos.pos1, pos.pos2, ech);
         action->simulate(game);
-        int potential = game.gamePotential(me);
+        int potential = game.gamePotential(me, true);
         action->undo(game);
 
         if(potential > maxBoard)
@@ -75,7 +75,7 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
     while(nbCatalyser > 0)
     {
         Action* bestCatalyse = nullptr;
-        int bestCatalyseVal = game.gamePotential(me);
+        int bestCatalyseVal = game.gamePotential(me, false);
         for(int player = 0 ; player < 2 ; player++)
         {
             BoardSimulator& board = player ? game.myBoard : game.oppBoard;
@@ -88,7 +88,7 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
                     {
                         Catalyse* catalyse = new Catalyse(me, player, position{x,y}, static_cast<case_type>(t));
                         catalyse->simulate(game);
-                        int score = game.gamePotential(me);
+                        int score = game.gamePotential(me, false);
                         catalyse->undo(game);
 
                         if(score > bestCatalyseVal)

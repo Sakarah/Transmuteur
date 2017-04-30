@@ -24,7 +24,7 @@ public:
     bool isValidSamplePos(position, position, echantillon) const;
     std::vector<position_echantillon> possibleSamplePos(echantillon) const;
 
-    int boardPotential() const;
+    std::pair<int, int> boardPotential() const;
     int countHoles() const;
     int typeCount(case_type) const;
 

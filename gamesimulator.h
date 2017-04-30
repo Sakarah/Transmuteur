@@ -14,19 +14,26 @@ struct GameSimulator
         penalty = 0;
     }
 
-    int gamePotential(bool me) const
+    int gamePotential(bool me, bool withCatalyser) const
     {
-        int score = myBoard.boardPotential() + myScore + myCatalyser;
-        score -= oppBoard.boardPotential() + oppScore + oppCatalyser;
+        std::pair<int,int> myBoardPotential = myBoard.boardPotential();
+        std::pair<int,int> oppBoardPotential = oppBoard.boardPotential();
+        int score = myBoardPotential.first + myScore;
+        score -= oppBoardPotential.first + oppScore;
         score -= penalty;
+        if(withCatalyser)
+        {
+            score += catalyserValue() * (myCatalyser + myBoardPotential.second - oppCatalyser - oppBoardPotential.second);
+        }
         return me ? score : -score;
     }
 
-    int hash() const
+    int catalyserValue() const
     {
-        int h1 = myBoard.hash();
-        int h2 = oppBoard.hash();
-        return h1 ^ (h2 << 1);
+        std::vector<position>::size_type maxArea = 0;
+        for(std::vector<position> reg : myBoard.getRegions()) maxArea = std::max(maxArea, reg.size());
+        for(std::vector<position> reg : oppBoard.getRegions()) maxArea = std::max(maxArea, reg.size());
+        return quantite_transmutation_or(maxArea+1) - quantite_transmutation_or(maxArea);
     }
 
     BoardSimulator myBoard;

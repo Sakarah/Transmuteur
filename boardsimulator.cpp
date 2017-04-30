@@ -189,17 +189,18 @@ std::vector<position_echantillon> BoardSimulator::possibleSamplePos(echantillon 
     return result;
 }
 
-int BoardSimulator::boardPotential() const
+std::pair<int,int> BoardSimulator::boardPotential() const
 {
-    int potential = 0;
+    int potentialGold = 0;
+    int potentialCatalyser = 0;
     for(std::vector<position> region : getRegions())
     {
         // On s'attend à ce qu'une case sur le plateau puisse rapporter par la suite.
-        potential += regionGoldValue(region.size() + 2, typeCase(region[0]));
-        potential += regionCatalyserValue(region.size() + 2, typeCase(region[0]));
+        potentialGold += regionGoldValue(region.size() + 2, typeCase(region[0]));
+        potentialCatalyser += regionCatalyserValue(region.size(), typeCase(region[0]));
     }
     //potential -= countHoles();
-    return potential;
+    return std::make_pair(potentialGold, potentialCatalyser);
 }
 
 int BoardSimulator::countHoles() const
