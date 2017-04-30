@@ -108,7 +108,11 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
         thisTurnActions.actionList.push_back(bestCatalyse);
     }
 
-    if(!me) return thisTurnActions;
+    if(!me)
+    {
+        for(int i = thisTurnActions.actionList.size()-1 ; i >= 0 ; i--) thisTurnActions.actionList[i]->undo(game);
+        return thisTurnActions;
+    }
 
     // On cherche à donner la pire pièce à l'adversaire
     int worstAdvPotential = INFINITY;
