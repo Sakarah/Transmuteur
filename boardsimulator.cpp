@@ -118,6 +118,21 @@ std::vector<std::vector<position>> BoardSimulator::getRegions() const
     return regions;
 }
 
+int BoardSimulator::regionExtension(std::vector<position>& region) const
+{
+    int extension = 0;
+    for(position pos : region)
+    {
+        for(position diffPos : DIFF_POS)
+        {
+            position testPos = pos + diffPos;
+            if(!isValid(testPos)) continue;
+            if(typeCase(testPos) == VIDE) extension++;
+        }
+    }
+    return (extension+1) / 2; // On estime qu'on pourra occuper la moitié (arrondi sup) des espaces autour
+}
+
 bool BoardSimulator::isValidSamplePos(position pos1, position pos2, echantillon ech) const
 {
     // Precond : pos1 et pos2 sont contigues et valides
@@ -166,8 +181,8 @@ int BoardSimulator::boardPotential() const
     for(std::vector<position> region : getRegions())
     {
         // On s'attend à ce qu'une case sur le plateau puisse rapporter par la suite.
-        potential += regionGoldValue(region.size() + 2, typeCase(region[0]));
-        potential += regionCatalyserValue(region.size(), typeCase(region[0]));
+        potential += regionGoldValue(region.size() + regionExtension(region), typeCase(region[0]));
+        potential += regionCatalyserValue(region.size() + regionExtension(region), typeCase(region[0]));
     }
     return potential;
 }

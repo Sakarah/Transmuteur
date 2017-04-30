@@ -7,8 +7,8 @@ struct GameSimulator
 {
     GameSimulator() : myBoard(moi()), oppBoard(adversaire())
     {
-        myScore = 0;
-        oppScore = 0;
+        myScore = score(moi());
+        oppScore = score(adversaire());
         myCatalyser = 0;
         oppCatalyser = 0;
     }

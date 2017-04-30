@@ -18,6 +18,7 @@ public:
 
     void fillRegion(std::vector<position>&, case_type);
     std::vector<std::vector<position>> getRegions() const;
+    int regionExtension(std::vector<position>&) const;
 
     bool isValidSamplePos(position, position, echantillon) const;
     std::vector<position_echantillon> possibleSamplePos(echantillon) const;
