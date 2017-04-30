@@ -3,6 +3,7 @@
 #include "actions_placesample.h"
 #include "actions_transmute.h"
 #include "actions_wipeout.h"
+#include "actions_catalyse.h"
 #include "prototypes.h"
 
 // Donne l'ownership de l'action au récepteur
@@ -36,6 +37,7 @@ std::pair<Action*, int> chooseBestPlaceSample(bool me, GameSimulator& game, echa
 // Donne l'ownership des actions au récepteur (on garantit que ce sont des pointeurs valides)
 TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
 {
+    // On choisit entre enlever une zone avant de jouer ou tout laisser en place
     Action* bestTransmuteAction = nullptr;
     std::pair<Action*, int> bestPlaceSampleAction = chooseBestPlaceSample(me, game, ech);
 
@@ -66,18 +68,57 @@ TurnActions chooseBestActions(bool me, GameSimulator& game, echantillon ech)
     thisTurnActions.actionList.push_back(bestPlaceSampleAction.first);
     thisTurnActions.gamePotential = bestPlaceSampleAction.second;
 
-    if(!me) return thisTurnActions;
-
     for(Action* a : thisTurnActions.actionList) a->simulate(game);
 
-    int worstEchValue = -1000000000;
+    // On utilise les catalyseurs ici -> Stratégie très gloutonne
+    int& nbCatalyser = me ? game.myCatalyser : game.oppCatalyser;
+    while(nbCatalyser > 0)
+    {
+        Action* bestCatalyse = nullptr;
+        int bestCatalyseVal = game.gamePotential(me);
+        for(int player = 0 ; player < 2 ; player++)
+        {
+            BoardSimulator& board = player ? game.myBoard : game.oppBoard;
+            for(int x = 0 ; x < TAILLE_ETABLI ; x++)
+            {
+                for(int y = 0 ; y < TAILLE_ETABLI ; y++)
+                {
+                    if(board.typeCase(position{x,y}) == VIDE) continue;
+                    for(int t = 1 ; t < NB_TYPE_CASES ; t++)
+                    {
+                        Catalyse* catalyse = new Catalyse(me, player, position{x,y}, static_cast<case_type>(t));
+                        catalyse->simulate(game);
+                        int score = game.gamePotential(me);
+                        catalyse->undo(game);
+
+                        if(score > bestCatalyseVal)
+                        {
+                            delete bestCatalyse;
+                            bestCatalyse = catalyse;
+                            bestCatalyseVal = score;
+                        }
+                        else delete catalyse;
+                    }
+                }
+            }
+        }
+
+        if(!bestCatalyse) break;
+        bestCatalyse->simulate(game);
+        thisTurnActions.actionList.push_back(bestCatalyse);
+    }
+
+    if(!me) return thisTurnActions;
+
+    // On cherche à donner la pire pièce à l'adversaire
+    int worstAdvPotential = INFINITY;
     for(echantillon advEch : nextPossibleSamples(ech))
     {
         TurnActions oppTurnActions = chooseBestActions(!me, game, advEch);
         for(Action* a : oppTurnActions.actionList) delete a;
-        if(oppTurnActions.gamePotential > worstEchValue)
+        if(oppTurnActions.gamePotential < worstAdvPotential)
         {
-            worstEchValue = oppTurnActions.gamePotential;
+            worstAdvPotential = oppTurnActions.gamePotential;
             thisTurnActions.echantillonAdv = advEch;
         }
     }

@@ -25,7 +25,8 @@ void jouer_tour()
         delete a;
     }
 
-    donner_echantillon(turnActions.echantillonAdv);
+    erreur err = donner_echantillon(turnActions.echantillonAdv);
+    if(err) printf("FAIL GiveSample (%d)", err);
 
     if(tour_actuel() >= NB_TOURS-1)
     {
