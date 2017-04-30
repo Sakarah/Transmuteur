@@ -19,11 +19,15 @@ void Transmute::simulate(GameSimulator& sim)
 
     if(_me)
     {
+        if(_region.size() == 1) sim.penalty += ONE_PENALTY;
+        if(_region.size() == 2) sim.penalty += TWO_PENALTY;
         sim.myScore += _diffScore;
         sim.myCatalyser += _diffCatalyser;
     }
     else
     {
+        if(_region.size() == 1) sim.penalty -= ONE_PENALTY;
+        if(_region.size() == 2) sim.penalty -= TWO_PENALTY;
         sim.oppScore += _diffScore;
         sim.oppCatalyser += _diffCatalyser;
     }
@@ -34,12 +38,16 @@ void Transmute::undo(GameSimulator& sim)
     if(_me)
     {
         sim.myBoard.fillRegion(_region, _type);
+        if(_region.size() == 1) sim.penalty -= ONE_PENALTY;
+        if(_region.size() == 2) sim.penalty -= TWO_PENALTY;
         sim.myScore -= _diffScore;
         sim.myCatalyser -= _diffCatalyser;
     }
     else
     {
         sim.oppBoard.fillRegion(_region, _type);
+        if(_region.size() == 1) sim.penalty += ONE_PENALTY;
+        if(_region.size() == 2) sim.penalty += TWO_PENALTY;
         sim.oppScore -= _diffScore;
         sim.oppCatalyser -= _diffCatalyser;
     }

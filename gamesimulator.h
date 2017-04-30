@@ -11,17 +11,21 @@ struct GameSimulator
         oppScore = score(adversaire());
         myCatalyser = 0;
         oppCatalyser = 0;
+        penalty = 0;
     }
 
     int gamePotential(bool me) const
     {
         int score = myBoard.boardPotential() + myScore + myCatalyser;
         score -= oppBoard.boardPotential() + oppScore + oppCatalyser;
+        score -= penalty;
         return me ? score : -score;
     }
 
     BoardSimulator myBoard;
     BoardSimulator oppBoard;
+
+    int penalty;
 
     int myScore;
     int oppScore;

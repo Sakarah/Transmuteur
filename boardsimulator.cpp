@@ -130,7 +130,7 @@ int BoardSimulator::regionExtension(std::vector<position>& region) const
             if(typeCase(testPos) == VIDE) extension++;
         }
     }
-    return (extension+1) / 2; // On estime qu'on pourra occuper la moitié (arrondi sup) des espaces autour
+    return ((extension+1) / 2) + 1; // On estime qu'on pourra occuper la moitié (arrondi sup) des espaces autour
 }
 
 bool BoardSimulator::isValidSamplePos(position pos1, position pos2, echantillon ech) const
@@ -181,8 +181,8 @@ int BoardSimulator::boardPotential() const
     for(std::vector<position> region : getRegions())
     {
         // On s'attend à ce qu'une case sur le plateau puisse rapporter par la suite.
-        potential += regionGoldValue(region.size() + regionExtension(region), typeCase(region[0]));
-        potential += regionCatalyserValue(region.size() + regionExtension(region), typeCase(region[0]));
+        potential += regionGoldValue(region.size() + 2, typeCase(region[0]));
+        potential += regionCatalyserValue(region.size() + 2, typeCase(region[0]));
     }
     //potential -= countHoles();
     return potential;
