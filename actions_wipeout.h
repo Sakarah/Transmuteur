@@ -4,6 +4,8 @@
 #include "actions_action.h"
 #include "gamesimulator.h"
 
+/// Implémente une action de wipeout intelligent qui récupère tout les points
+/// possibles avant d'effacer la grille.
 class Wipeout : public Action
 {
 public:

@@ -5,6 +5,21 @@
 #include <chrono>
 #include <map>
 
+/*
+ * Transmuteur est une IA pour le jeu Tabula Prologinia.
+ * Elle se base sur une heuristique que toute simulation d'action en tant que
+ * l'IA elle-même tente de maximiser et que toute simulation d'action en
+ * tant que l'adversaire tente de minimiser.
+ * A chaque tour on commence par simuler son propre tour puis on choisit selon
+ * le même algorithme des actions pour le tour de l'adversaire.
+ * On essaye ensuite de lui donner le pire échantillon s'il jouait comme nous.
+ * De plus, on regarde ce qu'il aurait fait pour pouvoir anticiper certaines
+ * destructions et récupérer les points avant.
+ *
+ * L'IA possède de plus une détection de cycles pour éviter de rester bloquée à
+ * toujours faire la même chose.
+ */
+
 static std::map<long long, int> cycleMap;
 
 /// Fonction appelée au début de la partie.
@@ -19,7 +34,7 @@ void jouer_tour()
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
 
-
+    // Gestion des cycles
     GameSimulator game;
     long long gameHash = game.myBoard.hash();
     if(cycleMap.count(gameHash))
@@ -40,8 +55,8 @@ void jouer_tour()
     }
     cycleMap[gameHash] = game.myScore - game.oppScore;
 
+    // Choix des actions pour ce tour
     TurnActions turnActions = chooseBestActions(true, game, echantillon_tour());
-
     for(Action* a : turnActions.actionList)
     {
         a->execute();
@@ -51,10 +66,12 @@ void jouer_tour()
     erreur err = donner_echantillon(turnActions.echantillonAdv);
     if(err) printf("FAIL GiveSample (%d)", err);
 
+    // Gestion de la fin de partie
     if(tour_actuel() >= NB_TOURS-1)
     {
         Wipeout wipe(true);
         wipe.execute();
+        // TODO : gérer les derniers catalyseurs
     }
 
 

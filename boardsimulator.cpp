@@ -88,8 +88,11 @@ void BoardSimulator::fillRegion(std::vector<position>& reg, case_type type)
     for(position regP : reg) setCase(regP, type);
 }
 
+/// Renvoie l'ensemble des régions du plateau.
 std::vector<std::vector<position>> BoardSimulator::getRegions() const
 {
+    // Implémentation : On se contente d'un simple BFS.
+
     bool visitedPos[TAILLE_ETABLI][TAILLE_ETABLI];
     for(int x = 0 ; x < TAILLE_ETABLI ; x++)
     {
@@ -133,6 +136,7 @@ std::vector<std::vector<position>> BoardSimulator::getRegions() const
     return regions;
 }
 
+/// Renvoie la région autour de la position passée en paramètre.
 std::vector<position> BoardSimulator::regionOf(position initPos) const
 {
     bool visitedPos[TAILLE_ETABLI][TAILLE_ETABLI];
@@ -185,6 +189,7 @@ bool BoardSimulator::isValidSamplePos(position pos1, position pos2, echantillon 
     return false;
 }
 
+// Fonction de comparaison de distance d'un échantillon au centre de la grille
 bool nearCenterCmp(const position_echantillon& a, const position_echantillon& b)
 {
     const position twoTimesCenter = position{TAILLE_ETABLI, TAILLE_ETABLI};
@@ -218,24 +223,31 @@ std::vector<position_echantillon> BoardSimulator::possibleSamplePos(echantillon 
         }
     }
 
-    std::sort(result.begin(), result.end(), nearCenterCmp); // Favorise légèrement les cases du centre
+    // On cherche à favoriser légèrement les cases du centre
+    std::sort(result.begin(), result.end(), nearCenterCmp);
 
     return result;
 }
 
+/// Renvoie une valeur du potentiel en or et en catalyseur du plateau.
+/// Ce potentiel est une heuristique importante permettant de savoir si un état
+/// de l'établi est intéressant ou non.
 std::pair<int,int> BoardSimulator::boardPotential() const
 {
     int potentialGold = 0;
     int potentialCatalyser = 0;
     for(std::vector<position> region : getRegions())
     {
-        // On s'attend à ce qu'une case sur le plateau puisse rapporter par la suite si elle n'est pas isolée.
+        // On s'attend à ce qu'une région sur le plateau puisse rapporter plus
+        // par la suite si elle n'est pas isolée.
         potentialGold += regionGoldValue(region.size() + (isRegionIsolated(region) ? 0 : 1), typeCase(region[0]));
         potentialCatalyser += regionCatalyserValue(region.size(), typeCase(region[0]));
     }
     return std::make_pair(potentialGold, potentialCatalyser);
 }
 
+/// Les régions isolées sont des régions qu'on ne peut pas compléter sans
+/// détruire une case adjacente.
 bool BoardSimulator::isRegionIsolated(std::vector<position>& reg) const
 {
     for(position pos : reg)

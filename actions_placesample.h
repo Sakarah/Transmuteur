@@ -3,6 +3,7 @@
 
 #include "actions_action.h"
 
+/// Implémente une action de pose d'échantillon
 class PlaceSample : public Action
 {
 public:

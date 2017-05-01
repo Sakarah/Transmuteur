@@ -3,6 +3,7 @@
 
 #include "actions_action.h"
 
+/// Implémente une action de transmutation
 class Transmute : public Action
 {
 public:

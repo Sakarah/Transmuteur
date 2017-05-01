@@ -26,6 +26,7 @@ int regionCatalyserValue(int size, case_type type)
     else return 0;
 }
 
+/// Renvoie la liste des échantillons possibles lorsque l'adversaire a donné ech
 std::vector<echantillon> nextPossibleSamples(echantillon ech)
 {
     std::vector<echantillon> nextEch;

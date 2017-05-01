@@ -3,6 +3,9 @@
 
 #include "prologin.hh"
 
+/// Simulateur d'établi d'alchimie. On doit réimplémenter quasiment toutes les
+/// fonctions de l'API pour pouvoir simuler aussi bien nos actions que celles de
+/// l'adversaire.
 class BoardSimulator
 {
 public:

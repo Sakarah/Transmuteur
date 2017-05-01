@@ -3,6 +3,7 @@
 
 #include "actions_action.h"
 
+/// Implémente une action de catalyse
 class Catalyse : public Action
 {
 public:

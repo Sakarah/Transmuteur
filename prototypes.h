@@ -8,6 +8,7 @@ const int INFINITY = 1000000000;
 const int MIN_MAX_DEPTH = 1;
 const position DIFF_POS[4] = { position{1,0}, position{0,1}, position{-1,0}, position{0,-1} };
 
+// On pénalise les wipeout et les transmutations sur une case sinon l'algorithme n'avance jamais
 const int WIPEOUT_PENALTY = 5;
 const int ONE_PENALTY = 5;
 const int CATALYSER_BASE_VAL = 8;
