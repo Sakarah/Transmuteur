@@ -1,4 +1,4 @@
-#include "actions_placesample.h"
+#include "action_placesample.h"
 #include "gamesimulator.h"
 
 PlaceSample::PlaceSample(bool me, position pos1, position pos2, echantillon ech)

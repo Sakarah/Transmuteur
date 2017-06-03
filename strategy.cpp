@@ -1,9 +1,9 @@
 #include "prologin.hh"
 #include "gamesimulator.h"
-#include "actions_placesample.h"
-#include "actions_transmute.h"
-#include "actions_wipeout.h"
-#include "actions_catalyse.h"
+#include "action_placesample.h"
+#include "action_transmute.h"
+#include "action_wipeout.h"
+#include "action_catalyse.h"
 #include "prototypes.h"
 
 /// Cherche la meilleure action de placement de l'échantillon ech

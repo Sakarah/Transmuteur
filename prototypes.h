@@ -2,7 +2,7 @@
 #define PROTOTYPES_H
 
 #include "prologin.hh"
-#include "actions_action.h"
+#include "action.h"
 
 const int INFINITY = 1000000000;
 const int MIN_MAX_DEPTH = 1;

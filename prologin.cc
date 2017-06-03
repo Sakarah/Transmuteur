@@ -1,7 +1,7 @@
 #include "prologin.hh"
 #include "gamesimulator.h"
 #include "prototypes.h"
-#include "actions_wipeout.h"
+#include "action_wipeout.h"
 #include <chrono>
 #include <map>
 

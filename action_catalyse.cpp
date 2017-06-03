@@ -1,5 +1,5 @@
-#include "actions_catalyse.h"
-#include "actions_transmute.h"
+#include "action_catalyse.h"
+#include "action_transmute.h"
 #include "gamesimulator.h"
 
 Catalyse::Catalyse(bool fromMe, bool toMe, position pos, case_type dest_type)

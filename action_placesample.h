@@ -1,7 +1,7 @@
 #ifndef PLACESAMPLE_H
 #define PLACESAMPLE_H
 
-#include "actions_action.h"
+#include "action.h"
 
 /// Implémente une action de pose d'échantillon
 class PlaceSample : public Action

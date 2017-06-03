@@ -1,4 +1,4 @@
-#include "actions_wipeout.h"
+#include "action_wipeout.h"
 #include "prototypes.h"
 
 Wipeout::Wipeout(bool me)
